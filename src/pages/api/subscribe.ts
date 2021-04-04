@@ -17,8 +17,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     if(req.method === 'POST') {
         const session = await getSession({req})
 
-        console.log(session)
-
 
         const user = await fauna.query<User>(
             q.Get(
@@ -31,7 +29,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
         let customerId = user.data.stripe_customer_id
 
-        console.log(customerId)
+        
 
         if(!customerId) {
             const stripeCustomer = await stripe.customers.create({
